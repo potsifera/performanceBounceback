@@ -14,8 +14,8 @@ public class BallSpawner : MonoBehaviour {
     private float cooldown;
     private float cooldownLength = 0.5f;
 
-	private Vector3 spawnPos;
-	private Quaternion spawnRot;
+	private Vector3 spawnPos;//store the initial position 
+	private Quaternion spawnRot; //stores the initial rotation
 
     void Awake()
     {
@@ -42,22 +42,18 @@ public GameObject GetPooledBall()
     if (ballPoolNum > (ballsAmount - 1))
     {
         ballPoolNum = 0;
-			Debug.Log("se puso en ceros");
+			
     }
     //if we’ve run out of objects in the pool , reuse an old one
     if (pooledBalls[ballPoolNum].activeInHierarchy)
     {
-			//create a new bullet and add it to the bulletList
-			// GameObject obj = Instantiate(pooledBall);
-			// pooledBalls.Add(obj);
-			//  ballsAmount++;
-			//  ballPoolNum = ballsAmount - 1;
+			//resets the position of the last ball to the starting point
 			pooledBalls[ballPoolNum].transform.position = spawnPos;
 			pooledBalls[ballPoolNum].transform.rotation = spawnRot;
 
 
 	}
-        Debug.Log(ballPoolNum);
+       // Debug.Log(ballPoolNum);
         return pooledBalls[ballPoolNum];
 }
    	
