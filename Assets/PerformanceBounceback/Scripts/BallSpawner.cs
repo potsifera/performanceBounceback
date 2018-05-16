@@ -77,12 +77,5 @@ public GameObject GetPooledBall()
         selectedBall.SetActive(true);
     }
 
-	private void OnTriggerStay(Collider other)
-	{
-		if (other.gameObject.CompareTag("Floor"))
-		{
-
-
-		}
-	}
+	
 }
