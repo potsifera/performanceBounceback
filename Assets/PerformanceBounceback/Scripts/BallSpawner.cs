@@ -14,9 +14,14 @@ public class BallSpawner : MonoBehaviour {
     private float cooldown;
     private float cooldownLength = 0.5f;
 
+	private Vector3 spawnPos;
+	private Quaternion spawnRot;
+
     void Awake()
     {
         current = this; //makes it so the functions in ObjectPool can be accessed easily anywhere
+		spawnPos = transform.position;
+		spawnRot = transform.rotation;
     }
 
     void Start()
@@ -37,16 +42,21 @@ public GameObject GetPooledBall()
     if (ballPoolNum > (ballsAmount - 1))
     {
         ballPoolNum = 0;
+			Debug.Log("se puso en ceros");
     }
-    //if we’ve run out of objects in the pool too quickly, create a new one
+    //if we’ve run out of objects in the pool , reuse an old one
     if (pooledBalls[ballPoolNum].activeInHierarchy)
     {
-        //create a new bullet and add it to the bulletList
-        GameObject obj = Instantiate(pooledBall);
-        pooledBalls.Add(obj);
-        ballsAmount++;
-        ballPoolNum = ballsAmount - 1;
-    }
+			//create a new bullet and add it to the bulletList
+			// GameObject obj = Instantiate(pooledBall);
+			// pooledBalls.Add(obj);
+			//  ballsAmount++;
+			//  ballPoolNum = ballsAmount - 1;
+			pooledBalls[ballPoolNum].transform.position = spawnPos;
+			pooledBalls[ballPoolNum].transform.rotation = spawnRot;
+
+
+	}
         Debug.Log(ballPoolNum);
         return pooledBalls[ballPoolNum];
 }
@@ -70,4 +80,13 @@ public GameObject GetPooledBall()
         selectedRigidbody.angularVelocity = Vector3.zero;
         selectedBall.SetActive(true);
     }
+
+	private void OnTriggerStay(Collider other)
+	{
+		if (other.gameObject.CompareTag("Floor"))
+		{
+
+
+		}
+	}
 }
